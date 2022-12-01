@@ -1,0 +1,109 @@
+.testpaper-main{
+    background: #fff;
+    box-shadow: 3px 3px 3px #fff;
+    padding: 0 30px;
+}
+.testpaper-tab-1-frame-inside-describe-information button{
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 1px solid #d9d9d9;
+    background: #fafafa;
+}
+
+.testpaper-tab-1-frame-inside-data-information-li{
+    border-right: 1px solid gray;
+    grid-template-columns: 230px;   
+}
+.el-autocomplete{
+    width: 400px;
+}
+.tab-all{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.testpaper-tab-1{
+    display: grid;
+     grid-gap:20px 20px;
+     justify-content: space-between;
+     grid-template-columns: repeat(auto-fill, 271px);
+}
+.testpaper-tab-1-frame-inside{
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.testpaper-tab-1-frame-inside-img-information{
+    width: 50px;
+    height: 50px;
+}
+.testpaper-tab-1-frame-inside-img{
+    margin: auto;
+}
+.testpaper-tab-1-frame-inside-data-information ul{
+    display: flex;
+    /* justify-content: space-between; */
+}
+.testpaper-tab-1-frame-inside-data-information ul li{
+    /* width: 40px; */
+    width: 100px;
+    /* border-right: 1px solid; */
+}
+.testpaper-tab-1-frame{
+    padding: 20px;
+    border: 1px solid rgb(215, 198, 198);
+    height: 260px;
+    width: 230px;
+}
+.block{
+    display: block;
+}
+.none{
+    display: none;
+}
+.tab-1 {
+  display: none;
+}
+.transform-inside-information-header-right-ul {
+  display: flex;
+  justify-content: space-between;
+  width: 200px ;
+}
+.transform-inside-information-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  height: 50px;
+  align-items: center;
+}
+.transform-inside-information-header-left-ul {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
+.transform-inside {
+  padding: 10px;
+}
+.active{
+    border-bottom: 1px solid red;
+}
+.el-header{
+    height: 100% !important;
+    /* margin-bottom: 20px; */
+    
+}
+ .el-input {
+    width: 400px;
+  }
+  .testpaper-header{
+    display: grid;
+    height: 200px;
+    background: #fff;
+    box-shadow: 3px 3px 3px #fff;
+  }
+  .testpaper-header-first{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+  }

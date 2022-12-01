@@ -1,0 +1,19 @@
+.Collection-inside-header-inside{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.Collection{
+    background: white;
+}
+.Collection-inside-botton-inside-search{
+    height: 30px;
+    padding: 20px;
+}
+.Collection-inside-botton-inside-search input{
+    height: 100%;
+    width: 100%;
+}

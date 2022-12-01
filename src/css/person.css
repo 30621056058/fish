@@ -1,0 +1,105 @@
+.aside-right{
+    float: left;
+    margin-top: -48px;
+}
+.person-main-inside-botton-information-describe-inside-col-left{
+ text-align: left;
+ flex: 1 ;
+}
+.person-main-inside-botton-information-describe-inside-col-right{
+    flex:8;
+    text-align: left;
+}
+.el-menu-vertical-demo{
+    /* height: 795px; */
+}
+.person-main-inside-botton-information-describe-inside-col{
+    display: flex;
+    align-items: center;
+    /* padding: 20px; */
+    height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.person-main-inside-botton-information-header-inside{
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.person-main-inside-top-information-synopsis-botton{
+    text-align: left;
+    margin-left: 10px;
+}
+.person-main-inside-top-information-synopsis{
+    width: 130px;
+}
+.person-main-inside-top-information-synopsis-header{
+  font-size: 36px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+.person-main-inside-top-information{
+    display: flex;
+}
+.person-main-inside-botton-information{
+    /* padding: 20px; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.person-main-inside-botton-information-header{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    height: 50px;
+    border-bottom: 1px solid;
+}
+.person-main-inside-top-information-img{
+    width: 100px;
+    height: 100px;
+}
+.person-main-inside-top-information-img img{
+    width: 100%;
+    border-radius: 50%;
+}
+.person-main-inside-top{
+    padding: 20px;
+    background: white;
+}
+.person-main-inside{
+    /* background: white; */
+}
+/* .el-main{
+    padding: 0 !important;
+} */
+.el-main{
+    padding:  0 20px !important;
+ }
+.person-main{
+    /* padding: 20px; */
+    /* padding-bottom: 20px; */
+    /* padding-top: 20px; */
+}
+.el-radio-group{
+    margin: 0 !important;
+}
+.el-aside{
+    padding: 0;
+    width: 220px ;
+}
+.aside-inside{
+    /* padding: 10px; */
+    padding-top: 10px;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
+  .person-main-inside-botton{
+    background: white;
+    margin-top: 20px;
+    box-shadow: 3px 3px 3px white;
+  }

@@ -1,0 +1,23 @@
+.floor{
+    /* margin-top: 50px; */
+    /* position: relative;
+    height: 160px;
+    */ 
+        /* position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -300px; */
+    /* position: relative;
+    height: 100px; */
+} 
+.floor-content{
+    height: 176px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.floor-ul{
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+}

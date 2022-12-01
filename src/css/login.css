@@ -1,0 +1,8 @@
+.login-insidea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-contenta {
+    width: 600px;
+  }

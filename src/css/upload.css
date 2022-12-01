@@ -1,0 +1,61 @@
+.upload-iside-information-header-border{
+    border-bottom: 1px solid;
+  }
+  .upload-iside-information-inside{
+    text-align: left;
+    background: #fff;
+    box-shadow: 3px 3px 3px white;
+    border-radius: 3px;
+  }
+  .upload-iside-information-header{
+    padding: 20px;
+  }
+  .upload-iside-information-floor{
+    padding: 20px;
+  }
+  .Toolbar{
+    flex: 5;
+  }
+  .subject-font{
+    flex: 1;
+    text-align: left;
+  }
+  .selcet{
+    flex: 5;
+    text-align: left;
+  }
+  .selcetone{
+    flex: 5;
+    text-align: left;
+  }
+  .prepare-uload-inside-container-inside{
+    padding: 20px;
+    display: grid;
+    height: 1070px;
+  }
+  .prepare-upload{
+    background: #fff;
+    box-shadow: 3px 2px 3px white;
+    border-radius: 5px;
+  }
+  .quill-editor{
+    height: 300px;
+  }
+  .prepare-upload-inside-header{
+    border-bottom: 1px solid gray;
+      background: transparent;
+  }
+  .prepare-upload-inside-header-container{
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+    padding: 0 20px;
+    height: 50px;
+    align-items: center;
+  }
+  .el-aside{
+    width: 493px ;
+  }
+  .prepare-uload-inside-container-inside-bushouyinxiang-col{
+    display: flex;
+  }
