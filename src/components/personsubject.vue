@@ -156,7 +156,7 @@ export default {
                 url:"users/uploadsubject",
                 // url:"uploadsubject",
                 params:{
-                    username:123456
+                    username:this.$cookies.get('username')
                 }
             }).then((res) => {
                 console.log(res),this.listnum = res.data,htmlcontent.style.display="none",this.uploadnum = res.data.length
@@ -171,11 +171,15 @@ export default {
           url:"users/all",
           method:"get",
           params:{
-            sha:enter
+            sha:enter,
+            username:this.$cookies.get("username")
           }
         }).then(res=>{
            let htmlcontent =  document.querySelector(".card-conetnet")
           console.log(res),this.listnum = res.data,htmlcontent.style.display="none",this.uploadnum = res.data.length
+          if(res.data.length == 0){
+            this.$message.warning("没有信息")
+          }
         }).catch(err=>{
           console.log(err)
         })

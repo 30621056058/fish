@@ -19,6 +19,9 @@ import register from '../views/register.vue'
 import seevalue from '../components/seevalue.vue'
 import contentmain from '../views/contentmain.vue'
 import testpapercontent from '../views/testpapercontent.vue'
+import imgupload from '../components/imgupload'
+import comment from '../components/comment'
+import replypage from '../components/replypage'
 Vue.use(VueRouter)
 
 
@@ -33,6 +36,11 @@ const routes = [
     path: '/',
     name: 'login',
     component: login
+  },
+  {
+    path: '/imgupload',
+    name: 'imgupload',
+    component: imgupload
   },
   {
     path:"/testpaper",
@@ -98,6 +106,16 @@ const routes = [
       path:"/seevalue",
       name:"seevalue",
       component:seevalue
+    },
+    {
+      path:"/comment",
+      name:"comment",
+      component:comment
+    },
+    {
+      path:"/replypage",
+      name:"replypage",
+      component:replypage
     },
     ]
   },

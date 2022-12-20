@@ -10,7 +10,7 @@
                 <div class="card-content-child-inside">
                 <div class="card-content-header">
                     <div class="card-content-header-inside">
-                    <div>{{item.title}}</div>
+                    <div @click="gotitle(item.title)">{{item.title}}</div>
                     </div>
                 </div>
                 
@@ -46,6 +46,7 @@
             </div>
         </div>
        </el-card>
+       <floor></floor>
     </div>
 </template>
 
@@ -78,7 +79,12 @@ export default {
     },
 
     methods: {
-        
+        gotitle(vlaue){
+            console.log(vlaue)
+            this.$router.push("/contentmain")
+             this.$store.dispatch('infromation',vlaue);
+      this.$cookies.set("title",this.$store.state.title)
+        }
     },
 };
 </script>

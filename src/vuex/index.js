@@ -13,6 +13,8 @@ const store = new Vuex.Store({
     subjecttype:"简答题",
     title:"",
     num:'',
+    subjectid:0,
+    headernum:0,
   },
   mutations:{
     // JIA:function(state,value){
@@ -25,6 +27,12 @@ const store = new Vuex.Store({
     },
     Add:function(state,value){
       state.num = value
+    },
+    Subject:function(state,value){
+      state.subjectid = value
+    },
+    Headernum:function(state,value){
+      state.headernum = value
     }
     
   },
@@ -40,8 +48,13 @@ const store = new Vuex.Store({
       console.log(value)
       console.log('Infromation')
       state.commit('Infromation',value)
+    },
+    subject:function(state,value){
+      state.commit("Subject",value)
+    },
+    headernum:function(state,value){
+      state.commit("Headernum",value)
     }
-   
   },
   getters:{
  

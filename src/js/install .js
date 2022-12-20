@@ -1,6 +1,7 @@
 // import Vue from "vue";
 import Header from "../components/header.vue"
 import Floor from "../components/floor.vue"
+import imgupload from '../components/imgupload'
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
@@ -8,6 +9,7 @@ const heade = {
     install:function(Vue){
         Vue.component("Header",Header)
         Vue.component("Floor",Floor)
+        Vue.component("imgupload",imgupload)
     }
 }
 

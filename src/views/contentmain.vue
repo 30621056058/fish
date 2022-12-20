@@ -120,7 +120,7 @@
 </el-input>
 <el-upload
   class="upload-demo"
-  action="users/users/pictureuploado"
+  action="users/pictureuploado"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
   :on-success="success"
@@ -145,20 +145,20 @@
     <el-card :body-style="{'text-align':'left'}">
         <div slot="header">题目信息</div>
         <div class="subject-conetnet">
-            <div class="subject-conetnet-inside">
-                <div><span>浏览数：</span><span>{{views}}</span></div>
-                <div><span>发布时间：</span><span>{{releasetime}}</span></div>
+            <div class="subject-conetnet-inside" v-for="item in subject_information" :key="item.id">
+                <div><span>浏览数：</span><span>{{item.views}}</span></div>
+                <div><span>发布时间：</span><span>{{item.time}}</span></div>
                 <div>
                     <ul class="toux">
                 <li>上传者：</li>
-                <li> <el-avatar :size="30" :src="require(`../assets/img/${imgtoux}`)"></el-avatar></li>
-                <li>鱼皮站长</li>
-                <li><el-tag type="success">{{usertag}}</el-tag></li>
+                <li> <el-avatar :size="30" :src="require(`../assets/img/${item.img}`)"></el-avatar></li>
+                <li>{{item.username}}</li>
+                <li><el-tag type="success">{{item.tag}}</el-tag></li>
                 <!-- <li><el-tag type="success">v3</el-tag></li>
                 <li><el-tag type="success">v3</el-tag></li> -->
                 </ul>
                 </div>
-                <div><span>遇到人数: </span><span>{{yudaonum}}</span><button class="subject-btn" @click="myencounter">我遇到过</button></div>
+                <div><span>遇到人数: </span><span>{{item.yudao}}</span><button class="subject-btn" @click="myencounter">我遇到过</button></div>
             </div>
         </div>
     </el-card>
@@ -261,6 +261,7 @@ export default {
 
     data() {
         return {
+            subject_information:"",
             analysis:"",
             arrall:[],
             arr:[],
@@ -298,7 +299,7 @@ export default {
     },
 
     mounted() {
-  
+//   console.log(this.$cookies.get("title"),1111111)
     // console.log(this.$store.state.title,11111111)
    this.$http({
     url:"users/test",
@@ -306,20 +307,34 @@ export default {
         value:this.$cookies.get('title')
     }
    }).then((res) => {
-       console.log(res,"00000000000"),this.comment_reply = res.data//comment_reply赋值,
-             console.log(this.comment_reply.comment_img,"this")
+
+    //    console.log(res,"00000000000"),
+       this.comment_reply = res.data//comment_reply赋值,
+            //  console.log(this.comment_reply.comment_img,"this")
        if(this.img ==='' || null || undefined){
                    this.conent_img = true
-                   console.log(this.$refs,111111) 
+                //    console.log(this.$refs,111111) 
             }else{
                 this.conent_img = true 
             }
        for(var i=0;i<=this.comment_reply.length-1;i++){
-            console.log(this.comment_reply[i],'222222222222')
+            // console.log(this.comment_reply[i],'222222222222')
             this.comment_reply[i].index = i
-              console.log(this.comment_reply[i].comment_img,"this")
-              console.log(this,'0101')
+            //   console.log(this.comment_reply[i].comment_img,"this")
+            //   console.log(this,'0101')
        }
+    //    this.$http({
+    //     url:"users/updataLeavingmessage",
+    //     method:"get",
+    //     params:{
+    //         title:this.$cookies.get('title'),
+    //         Leavingamessage:this.comment_reply.length
+    //     }
+    //    }).then(res=>{
+    //     console.log(res)
+    //    }).catch(err=>{
+    //     console.log(err)
+    //    })
    }).catch((err) => {
         console.log(err)
    });
@@ -330,9 +345,14 @@ export default {
             title:this.$cookies.get("title")
         }
     }).then((res) => {
-        console.log(res),this.subjecttype = res.data[0].subjecttype,
-        this.tag = res.data[0].tag,this.titlevalue = res.data[0].title,
-        this.collectionvalue = res.data[0].collection
+        this.subject_information = res.data,
+        window.sessionStorage.setItem("title_username",res.data[0].username)
+        window.sessionStorage.setItem("title_img",res.data[0].img)
+        // console.log(res),
+        this.subjecttype = res.data[0].subjecttype,
+        this.tag = res.data[0].tag,
+        this.titlevalue = res.data[0].title,
+        this.collectionvalue = res.data[0].collection,
         this.imgtoux = res.data[0].img,
         this.views = res.data[0].views,
         this.releasetime = res.data[0].time,
@@ -349,7 +369,9 @@ export default {
                 //   iscollectionusername:this.$cookies.get("username")
                 },
             }).then((res) => {
-                console.log(res,1111111111111),this.cardold = res.data  ,console.log(this.cardold)
+                // console.log(res,1111111111111),
+                this.cardold = res.data  
+                // ,console.log(this.cardold)
             }).catch((err) => {
                 console.log(err)
             })
@@ -376,9 +398,9 @@ export default {
 
     watch:{
        
-        comment_reply:function(newvalue,old){
-            console.log(newvalue,old,222)
-           }
+        // comment_reply:function(newvalue,old){
+        //     // console.log(newvalue,old,222)
+        //    }
 
     },
 
@@ -391,31 +413,32 @@ export default {
         },
         //我遇到过
         myencounter(){
-            this.$http({
-                url:"",
-                method:"get",
-                params:{
+            this.yudao()
+            // this.$http({
+            //     url:"",
+            //     method:"get",
+            //     params:{
 
-                }
-            }).then(res=>{
-                console.log(res)
-                if(this.thumbsvalue >0){
-                    this.yudaonum --
-                    this.thumbsvalue --
-                }else{
-                      this.yudaonum ++
-                      this.thumbsvalue ++
-                }
-            }).catch(err=>{
-                console.log(err)
-            })
+            //     }
+            // }).then(res=>{
+            //     console.log(res)
+            //     if(this.thumbsvalue >0){
+            //         this.yudaonum --
+            //         this.thumbsvalue --
+            //     }else{
+            //           this.yudaonum ++
+            //           this.thumbsvalue ++
+            //     }
+            // }).catch(err=>{
+            //     console.log(err)
+            // })
         },
         share(){
-            console.log(window.location.href)
+            // console.log(window.location.href)
             this.$message.success("分享请复制网址"+"--"+window.location.href)
         },
         thumbs(value){
-           console.log(value.thumbs_up_main)
+        //    console.log(value.thumbs_up_main)
           
            if(value.thumbs_up_main >0){
                value.thumbs_up_main --
@@ -444,16 +467,22 @@ export default {
             this.$http({
     url:"users/hot"
    }).then((res) => {
-       console.log(res,"00000000000"),this.comment_reply = res.data//comment_reply赋值
+    //    console.log(res,"00000000000"),
+       this.comment_reply = res.data//comment_reply赋值
    }).catch((err) => {
         console.log(err)
    });
         },
         newnum(){
              this.$http({
-    url:"users/test"
+    url:"users/test",
+    method:"get",
+    params:{
+       value:this.$cookies.get('title')
+    }
    }).then((res) => {
-       console.log(res,"00000000000"),this.comment_reply = res.data//comment_reply赋值
+    //    console.log(res,"00000000000"),
+       this.comment_reply = res.data//comment_reply赋值
    }).catch((err) => {
         console.log(err)
    });
@@ -468,18 +497,20 @@ export default {
                 //   iscollectionusername:this.$cookies.get("username")
                 },
             }).then((res) => {
-                console.log(res),
-                this.$message.success("遇到过一次")
+                console.log(res)
+              
                   if(this.thumbsvalue >0){
                     this.yudaonum --
                     this.thumbsvalue --
+                    this.$message.warn("请不要多次点击")
                 }else{
                       this.yudaonum ++
                       this.thumbsvalue ++
+                        this.$message.success("遇到过一次")
                 }
             }).catch((err) => {
                 console.log(err),
-                this.$message.error("点击失败了，稍后重试")
+                this.$message.error("点击失败了，稍后重试或者你点了两次")
             });
         },
         collecttion(){
@@ -509,7 +540,7 @@ export default {
             });
         },
         cancel(itema){
-            console.log(itema)
+            // console.log(itema)
              let allnum = this.comment_reply.length
  var b = document.querySelectorAll("#onetexta")
             b[allnum-itema.id].style.display = "none"
@@ -527,7 +558,7 @@ export default {
             //2 -13
            
            
-            console.log(item.index)
+            // console.log(item)
          
             let a =  document.querySelectorAll("#onetexta")
             // let b = document.getElementById("onetexta")
@@ -541,9 +572,9 @@ export default {
         },
          open(shu) {
             
-              console.log(shu)
+            //   console.log(shu)
               var a = document.getElementById("onetext").value
-              console.log(a)
+            //   console.log(a)
         this.$confirm('是否回复', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -583,7 +614,7 @@ export default {
         this.img = file
         },
         queding(){
-          
+            
             this.dialogTableVisible = false,
              this.$http({
             url:"users/comment",
@@ -592,20 +623,58 @@ export default {
             params:{
                 title:this.titlenew,
                 content:this.textarea1,
-                // img:this.abs,
-                toux:sessionStorage.getItem('img'),
-                tag:sessionStorage.getItem('tag'),
-                username:sessionStorage.getItem('username'),
+                toux:this.$cookies.get('img'),
+                tag:this.$cookies.get('tag'),
+                username:this.$cookies.get('username'),
                 img:this.img,
                 father_title:this.$cookies.get("title")
                 // time:"",
             }
         }).then((res) => {
             console.log(res),  this.comment_reply = res.data//comment_reply赋值
+            for(var i=0;i<=this.comment_reply.length-1;i++){
+            // console.log(this.comment_reply[i],'222222222222')
+            this.comment_reply[i].index = i
+            //   console.log(this.comment_reply[i].comment_img,"this")
+            //   console.log(this,'0101')
+       }
         }).catch((err) => {
             console.log(err)
         });
-        },
+        if(window.sessionStorage.getItem("title_username") == this.$cookies.get("username")){
+            return
+        }else{
+                this.$http({
+                    url:"/subject/insertcommnet_two",
+                    method:"get",
+                    params:{
+                        username:window.sessionStorage.getItem("title_username"),
+                        toux:window.sessionStorage.getItem("title_img"),
+                        comment_value:this.textarea1,
+                        test_title:this.$cookies.get("title"),
+                        otherusername:this.$cookies.get("username"),
+                        other_toux:window.sessionStorage.getItem("img"),
+                        otherdescribe:"暂时不知道"
+                    }
+                  }).then(res=>{
+                    console.log(res.data)
+                    this.$http({
+                        url:"subject/uploadheadernum",
+                        method:"get",
+                        params:{
+                                username:window.sessionStorage.getItem("title_username"), 
+                                otherusername:this.$cookies.get("username"),
+                        }
+                    }).then(res=>{
+                        console.log(res),
+                        this.$message.success("评论成功，他她会看到的")
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+                  })
+                }
+        
+             },
            handleRemove(file, fileList) {
         console.log(file, fileList,"yi");
       },

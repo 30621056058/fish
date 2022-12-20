@@ -52,9 +52,34 @@
     </div>
     <button @click="getconetent">获取文章</button>
     <button @click="addcontent">增加文章</button>
+
+     <el-carousel :interval="4000" type="card" height="400px" ref="carousel" :autoplay="false">
+    <el-carousel-item v-for="item in carouselitem" :key="item.id" >
+      <div class="all">
+        <div>一共可以创建5道题,第{{item.id}}题</div>
+        <el-input v-model="item.title" placeholder="title">
+          <template slot="prepend">题目</template>
+        </el-input>
+        <el-input v-model="item.answer1" placeholder="answer1">
+           <template slot="prepend">题目</template>
+        </el-input>
+        <el-input v-model="item.answer2" placeholder="answer2">
+           <template slot="prepend">题目</template>
+        </el-input>
+        <el-input v-model="item.answer3" placeholder="answer3">
+           <template slot="prepend">题目</template>
+        </el-input>
+        <el-input v-model="item.answer4" placeholder="answer4">
+           <template slot="prepend">题目</template>
+        </el-input>
+        <button @click="add(1)">完成</button>
+      </div>
+    </el-carousel-item>
+  </el-carousel>
+  <button @click="ceshi">cisih</button>
   </div>
 </template>
-
+  <!-- <button @click="changevalue()">{{num}}</button> -->
 <script>
 import {Base64} from "js-base64"
 import "../css/login.css"
@@ -63,7 +88,7 @@ export default {
   name: "WorkspaceJsonLogin",
 
   data() {
-
+     
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -84,6 +109,27 @@ export default {
       }
     };
     return {
+      num:1,
+      papernum:0,
+      value:[
+        {
+          id:"1",
+          title:"",
+          answer1:"",
+          answer2:"",
+          answer3:"",
+          answer4:"",
+        },
+        {
+          id:"2",
+          title:""
+        }
+      ],
+        
+       carouselitem:[{
+        id:"1",
+        title:"title"
+      }],
       ruleForm: {
         pass: "",
         checkPass: "",
@@ -101,10 +147,71 @@ export default {
   },
 
   mounted() {
-   
+
+    
+   this.$http({
+    url:"/tianqi/index?key=1995e14a963135f27b2ef0b1b53d0fe7&city=101020100&type=1 ",
+    method:"get",
+    
+   }).then(res=>{
+    console.log(res)
+   }).catch(err=>{
+    console.log(err)
+   })
   },
 
+  watch:{
+    "a":{
+      handler(newvalue,oldvalue){
+        console.log("被修改了",newvalue,oldvalue)
+        // this.changevalue()
+         this.$refs.carousel.next()
+         console.log(this.$refs)
+      }
+    }
+  },
   methods: {
+    ceshi(){
+          if(window.WebSocket){
+      let ws = new WebSocket("ws://localhost:8001")
+    ws.onopen = function(){
+      console.log("服务器连接成功")
+      ws.send("成功")
+      
+    }
+    }else{
+      console.log(1)
+    }
+    },
+    changevalue(){
+        // var a = this.papernum+=1
+        // if(a == 5){
+        
+        //   this.papernum =0
+        // }
+        // this.$refs.carousel.setActiveItem(a)
+        // console.log(  this.$refs.carousel.setActiveItem(a))
+        // console.log(11111111)
+         this.$refs.carousel.next()
+        //  console.log( this.$refs)
+    },
+    add(){
+      // this.changevalue(indexa+1)
+      //  this.changevalue()
+      // console.log(this.$refs.carousel)
+      
+      let index =2
+      this.num++
+      console.log(index,1)
+     this.carouselitem.push({id:this.num})
+       if(this.carouselitem.length ==6){
+          alert("您已经填完了5道题,是否提交")
+
+       }
+      //  console.log(this.a)
+     
+       
+    },
     async  getconetent(){
     const contentres = await this.$http({
         url:"subject/getconetent",
@@ -169,7 +276,27 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+.all{
+  height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: space-around;
+}
+ .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
 </style>
 
 

@@ -36,6 +36,7 @@
 .header-right{
     display: flex;
     line-height: 4;
+    align-items: center;
 }
 .header-left{
   display: flex;
@@ -47,8 +48,15 @@
   justify-content: space-around;
   line-height: 2;
   align-items: center;
-  
+  height: 100%;
+}
+.itema {
+  /* margin-top: 20px; */
+  margin-right: 40px;
 }
 .el-link{
   margin-right: 0 !important;
+}
+.el-badge__content.is-fixed{
+  top: 10px;
 }

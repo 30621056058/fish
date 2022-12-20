@@ -23,6 +23,17 @@ export function lookmoreab(){
         methods:"get"
       })
  }
+
+ export function changearea(test){
+  console.log(test.slice(0,2))
+  return  request({
+    url:"users/changearea",
+    method:"get",
+    params:{
+      area:test.slice(0,2)
+    }
+  })
+}
 //  .then(res=>{
 //     console.log(res),console.log(res.data.length==datalistlength,two),one = res.data.length,two = datalistlength
 //   })

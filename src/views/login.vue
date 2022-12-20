@@ -114,7 +114,7 @@ export default {
     // console.log(this.$cookies.set("username",this.ruleForm.username))
     console.log(this.$cookies.get("keyname"));
     console.log(this.$cookies.get("username"))
-    if (this.$cookies.get("keyname")) {
+    if (this.$cookies.get("username")) {
       this.$router.push("/firstpage");
     } else {
       // alert("出错了");
@@ -137,14 +137,17 @@ export default {
           pass: this.$md5(this.ruleForm.pass),
         },
       }).then((res) => {
-          if(res.data.length == 0){
-            console.log("无参数")
-            this.$message.error("密码或者用户错误")
+          if(res.data.message != "成功"){
+           
+            this.$message.error(res.data.message)
           }else{
-            console.log(res.data[0].tag)
-            window.sessionStorage.setItem("tag",res.data[0].tag),
-            window.sessionStorage.setItem("img",res.data[0].img),
-            this.$cookies.set("img",res.data[0].img)
+            console.log(res.data)
+            this.$message.success(res.data.message)
+            console.log(res.data.data[0].tag)
+            window.sessionStorage.setItem("tag",res.data.data[0].tag),
+            this.$cookies.set("tag",res.data.data[0].tag)
+            window.sessionStorage.setItem("img",res.data.data[0].img),
+            this.$cookies.set("img",res.data.data[0].img)
             console.log(res,234567890)//这里没有值
             // this.$cookies.set("username",va[true])
             // window.sessionStorage.setItem("username",va)

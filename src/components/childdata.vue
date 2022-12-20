@@ -358,16 +358,7 @@ export default {
         console.log(err)
     })
   },
-//     beforeUpdate(){
-//  this.$http({
-//         methods:"get",
-//         url:"http://localhost/users/searchuser"
-//     }).then(res=>{
-//         console.log(res),this.userdataold=res.data,this.img.require(res.data[0].img)  ,this.form = res.data[0],console.log(typeof(this.form))
-//     }).catch(err=>{
-//         console.log(err)
-//     })
-//     },
+
   methods: {
      handleAvatarSuccess() {
         // this.imageUrl = URL.createObjectURL(file.raw);

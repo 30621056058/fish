@@ -77,6 +77,7 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
+        console.log(rule)
       } else {
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
@@ -136,11 +137,15 @@ export default {
       }catch{
         console.log("err")
         this.$message.error("用户名第一个参数要输入字母")
+        return
       }
       if(this.ruleForm.username ===""|| this.ruleForm.pass ===""){
         this.$message.error("请输入参数")
       }else{
-         this.$http({
+         this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert("submit!");
+            this.$http({
         methods: "get",
         // url:"checksearchuser",
         url: "users/register",
@@ -150,41 +155,32 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res),
-          this.$cookies.set("username",this.ruleForm.username)
-            window.sessionStorage.setItem("id", res.data[0].id),
-           
-            this.$message({
+          console.log({data:res})
+          if(res.data.mes){
+              this.$message.error(res.data.mes)
+          }else{
+               this.$cookies.set("username",this.ruleForm.username)
+               this.$router.push("/firstpage")
+             this.$message({
               message: "登录成功",
               type: "success",
             });
-      
-          this.$http({
-            method:"get",
-            url:"users/setcookie",
-            params:{
-              cookiesvalue: this.ruleForm.pass,
-            }
-          }).then(res=>{
-            console.log(res,"200")
-          }).catch(err=>{
-            console.log(err)
-          })
-        })
+          }
+        }
+        )
         .catch((err) => {
           console.log(err);
         });
-      }
-     
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-           this.$router.push("/firstpage")
+            
         } else {
-          console.log("error submit!!");
+        this.$message.error("请输入符合规则的密码和用户名");
           return false;
         }
       });
+       
+      }
+     
+     
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

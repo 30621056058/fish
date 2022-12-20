@@ -24,7 +24,7 @@
                        <div class="prepare-upload-inside-header">
                         <div class="prepare-upload-inside-header-container">
                           <div>上传题目</div>
-                          <div>欢迎分享面试题，<a href="#">获取积分</a> </div>
+                          <div>欢迎分享面试题，获取积分</div>
                         </div>
                        </div>
                        <div class="prepare-upload-inside-container">
@@ -56,6 +56,29 @@
                                 <el-select v-model="value" placeholder="请选择">
     <el-option
       v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+                                </div>
+                            </div>
+                          </div>
+                               <div class="prepare-uload-inside-container-inside-bushouyinxiang">
+                            <div class="prepare-uload-inside-container-inside-bushouyinxiang-col">
+                              <div class="subject-font"><span>*</span><span>地区</span></div>
+                              <div class="selcet"> 
+                                <el-select
+    v-model="areavalue"
+    multiple
+    filterable
+    remote
+    reserve-keyword
+    placeholder="请输入关键词"
+    :remote-method="remoteMethod"
+    :loading="arealoading">
+    <el-option
+      v-for="item in areaoptions"
       :key="item.value"
       :label="item.label"
       :value="item.value">
@@ -157,6 +180,11 @@ export default {
      components: { Editor, Toolbar,quillEditor },
     data() {
         return {
+           areaoptions: [],
+        areavalue: [],
+        arealist: [],
+        arealoading: false,
+        states: ["广东","四川","浙江"],
           a:"",
           b:"",
              options: [{
@@ -215,6 +243,9 @@ export default {
         
     },
     mounted() {
+       this.arealist = this.states.map(item => {
+        return { value: `${item}`, label: `${item}` };
+      });
        console.log(this.radioa)
     // var that = this
         // if(this.checkredio ==)
@@ -248,6 +279,20 @@ export default {
         editor.destroy() // 组件销毁时，及时销毁编辑器
     },
     methods: {
+      remoteMethod(query) {
+        if (query !== '') {
+          this.arealoading = true;
+          setTimeout(() => {
+            this.arealoading = false;
+            this.areaoptions = this.arealist.filter(item => {
+              return item.label.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+            });
+          }, 200);
+        } else {
+          this.areaoptions = [];
+        }
+      },
          onCreated(editor) {
             this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
            
@@ -281,18 +326,19 @@ export default {
          
           console.log(this.editor.getText(),test,this.radioa,this.radio,this.$cookies.get("img"),this.goods,this.input)
           if(this.editor.getText()!="" !=undefined && test!="" && this.radioa!="" && this.b!=""  !=undefined && this.radio!=""){
-            alert('success')
+           this.$message.success("有值")
             this.$http({
               method:"get",
             
               url:"users/savesubject",
              
               params:{
+                area:this.areavalue,
                 title:this.editor.getText(),
                 tag :test,
                 subjecttype:this.radioa,
                 difflcult:this.radio,
-                username:sessionStorage.getItem("username"),
+                username:this.$cookies.get("username"),
                 img:this.$cookies.get("img")
               }
             }).then((res) => {

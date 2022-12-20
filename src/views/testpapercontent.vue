@@ -31,7 +31,50 @@
   </span>
 </el-dialog>
       <div class="testcontent">
-        <div class="testcontent-inside">
+       
+        <el-empty v-if="empty" description="没有题库,待完善">
+  <el-button type="primary" @click="createtest">您可以自己创建，也可以等人</el-button>
+  <el-dialog
+  title="填写5道题"
+  
+  :visible.sync="createtestvalue"
+  width="70%"
+  :before-close="createtestClose">
+     <el-carousel :interval="4000" type="card" height="400px" ref="carousel" :autoplay="false">
+    <el-carousel-item  v-for="item in carouselitem" :key="item.id">
+      <div class="all" >
+        <div>一共可以创建5道题,第{{item.id}}题</div>
+          <el-input v-model="item.id" placeholder="id">
+          <template slot="prepend">id</template>
+        </el-input>
+        <el-input v-model="item.title" placeholder="title">
+          <template slot="prepend">题目</template>
+        </el-input>
+        <el-input v-model="item.answer1" placeholder="answer1">
+           <template slot="prepend">答案1</template>
+        </el-input>
+        <el-input v-model="item.answer2" placeholder="answer2">
+           <template slot="prepend">答案2</template>
+        </el-input>
+        <el-input v-model="item.answer3" placeholder="answer3">
+           <template slot="prepend">答案3</template>
+        </el-input>
+        <el-input v-model="item.answer4" placeholder="answer4">
+           <template slot="prepend">答案4</template>
+        </el-input>
+        <button @click="add(item)">完成</button>
+      </div>
+      
+    </el-carousel-item>
+  </el-carousel>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="createtestout">取 消</el-button>
+    <el-button type="primary" @click="createtestsure">确 定</el-button>
+  </span>
+</el-dialog>
+</el-empty>
+        <div class="testcontent-inside" v-if="emptyno">
+          
             <el-carousel trigger="click"  :autoplay='false' height="551px" :initial-index='index' @change="changeItem" >
       <el-carousel-item v-for="item in subjectall" :key="item.id" >
         <div class="testall">
@@ -39,8 +82,6 @@
         <div class="testcontent-inside-header-inside">
             <div class="testcontent-inside-header-inside-title">{{item.title}}</div>
             <div>  <el-button type="text" @click="answerorsubject">答案或题目有问题</el-button></div>
-            
-         
         </div>
       </div>
       <div class="select_test">
@@ -70,9 +111,58 @@ import {paperlist,answersubject,submiterror} from '../api/testpaper'
 export default {
   components: { floor },
     name: 'WorkspaceJsonTestpapercontent',
-
+      beforeRouteLeave(to,from,next){
+      if(to!=''){
+       if(from!=''){
+        console.log(1)
+       }
+      }
+     this.$confirm(`您已经答${this.$store.state.subjectid}道题`, '提示', {
+      confirmButtonText: '继续答题',
+      cancelButtonText: '不答题',
+      type: 'warning'
+    }).then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.log(err);
+      window.sessionStorage.setItem("subjectid",0)
+      next()//放行
+    })
+  
+},
     data() {
         return {
+          num:1,
+            carouselitem:[
+              {
+        id:"1",
+        title:""
+      }
+      ],
+               labelPosition: 'right',
+          testindex:0,
+          items:{
+             id:"1",
+              title:"",
+              answerone:"",
+              answertwo:"",
+              answerthree:""
+          },
+          testall:[
+            {
+              id:"1",
+              title:"sadad",
+              answerone:"asdsad",
+              answertwo:"asdsad",
+              answerthree:"asdsad"
+            }
+            ],
+          
+
+          autoplay:false,
+          createtestvalue:false,
+          empty:false,
+          emptyno:true,
             subjectone:"",
             subjectall:"",
             index:0,
@@ -90,25 +180,114 @@ export default {
                answer4error:"",
                selcetvalueone:"",
                subjectold:"",
+               btnnum:0,
             //    selceterror:"",
         };
     },
    
     mounted() {
-        
+    console.log(window.location.hash)
+  
+window.addEventListener("beforeunload", function (e) {
+     //不是所有浏览器都支持提示信息的修改
+     var confirmationMessage = "请先保存您编辑的内容,否则您修改的信息会丢失。";
+     e.returnValue = confirmationMessage;
+     
+     return confirmationMessage;
+    
+})
+
+         console.log(this.carouselitem,"item")
       answersubject(this.index).then(res=>{
           this.subjectone = {data:res}
           console.log(res)
       })
         paperlist(this.$route.query.title).then(res=>{
-            this.subjectall = res.data,this.subject = res.data.length,this.subjectold = res.data.length   
+            this.subjectall = res.data,this.subject = res.data.length,this.subjectold = res.data.length
+            if(this.subjectall =='' || this.subjectall == null){
+              this.empty = true,
+              this.emptyno = false
+            }else{
+              this.empty = false,
+              this.emptyno = true
+            }
         }).catch(err=>{
             console.log(err)
         })
     },
 
     methods: {
-        
+       changevalue(){
+            this.$refs.carousel.next()
+       },
+         add(item){
+        // let objectvalue = Object.values(item)
+        console.log(item)
+        item.titlepaper = this.$route.query.title
+          console.log(item)
+        // if(objectvalue.length == 6){
+      this.num++
+        // console.log(this.carouselitem,"itemaa")
+    //  this.carouselitem.push({item})
+       
+        // console.log(this.carouselitem[0],"item")
+       
+        // console.log(this.carouselitem[1].item,this.carouselitem[2].item,this.carouselitem[3].item,this.carouselitem[4].item)
+
+          // alert("您已经填完了5道题,是否提交")
+          
+          this.btnnum +=1
+          if(this.btnnum<=2){
+           this.$http({
+                url:"subject/inserttest",
+                method:"get",
+                params:{
+                  value1:item,
+                  // value2:this.carouselitem[2].item,
+                  // value3:this.carouselitem[3].item,
+                  // value4:this.carouselitem[4].item,
+                }
+              }).then(res=>{
+                console.log(res),this.$message.success("上传成功"),this.carouselitem =[{id:"",title:"",answer1:"",answer2:"",answer3:"",answer4:"",}]
+              }).catch(err=>{
+                console.log(err)
+              })
+          }else{
+            return this.$message.error("不能再上传了")
+          }
+              
+       
+        // }else{
+          // return alert("请填写完")
+        // }  
+    },
+      Complete(){
+        console.log(this.testindex)
+        this.testall[0].id = '0'
+        this.testindex+=1
+        console.log(this.testall)
+        this.testall.length+=1
+      },
+      setActiveItem(){
+        console.log(1)
+      },
+      createtestout(){
+        this.createtestvalue = false
+      },
+      createtestsure(){
+         this.createtestvalue = false
+         this.$message.success("创建成功")
+      },
+        createtestClose(done) {
+        this.$confirm('确认关闭？')
+          .then(res => {
+            done(res);
+          })
+          .catch(err => {console.log(err)});
+      },
+        createtest(){
+          this.createtestvalue = true
+        },
         selcet_remove(item){
             let num=0;
            console.log(item)
@@ -119,6 +298,7 @@ export default {
                     console.log(num)
                     num+=1
                      window.sessionStorage.setItem('subjectid',item.id)
+                     this.$store.dispatch("subject",item.id)
              }else{
                 window.sessionStorage.setItem('subjectid',item.id)
              }
@@ -167,6 +347,7 @@ export default {
     //    },
         querenjiaojuan(){
             this.Submit_paper = false
+             window.sessionStorage.setItem("subjectid",0)
         },
         quexiaojiaojuan(){
             this.Submit_paper = false,
@@ -175,8 +356,8 @@ export default {
         Submit_papers(){
             this.Submit_paper = true
             console.log(window.sessionStorage.getItem("subjectid"))
-            this.subject = this.subject - window.sessionStorage.getItem("subjectid")
-            
+            this.subject = this.subject - this.$store.state.subjectid
+           
         },
         Confirm_submission(){
               this.dialogVisible = false
@@ -201,6 +382,21 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.all{
+  height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: space-around;
+}
+.createtest{
+  height: 100%;
+}
+.createtest-inside{
+  display: grid;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
 .testcontent-inside-header-inside-title{
     width: 700px;
     overflow-wrap: break-word;

@@ -22,7 +22,15 @@ module.exports = {
             ws: true,
             // ws: true,
             changeOrigin: true
-        }
+        },
+        '/tianqi': {
+          target: 'https://apis.tianapi.com/',
+          // target:"",
+          pathRewrite:{'^/tianqi':'/tianqi'},
+          ws: true,
+          // ws: true,
+          changeOrigin: true
+      }
       }
 
       },

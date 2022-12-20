@@ -73,8 +73,37 @@
             </div>
             <div class="transform-inside-information-header-right">
                 <el-tooltip effect="dark" content="还未开发" placement="top">
-                 <el-button type="primary" size="mini">上传试卷</el-button>
+                 <el-button type="primary" size="mini" @click="uploadtestpaper">上传试卷</el-button>
                 </el-tooltip>
+                <el-dialog title="提交题目信息" :visible.sync="testpapervalue">
+  <el-form :model="testpaper">
+    <el-form-item label="题目名称" :label-width="formLabelWidth">
+      <el-input v-model="testpaper.name" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="题目标签" :label-width="formLabelWidth">
+        <el-select
+    v-model="value"
+    multiple
+    filterable
+    allow-create
+    default-first-option
+    placeholder="请选择文章标签">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+  <imgupload imgvalue='请上传题目图片' @custom="father"></imgupload>
+  {{updateTitlea}}
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="testpapervalue = false">取 消</el-button>
+    <el-button type="primary" @click="testpapervaluea()">确 定</el-button>
+  </div>
+</el-dialog>
               
             </div>
           </div>
@@ -104,8 +133,8 @@
                         <div class="testpaper-tab-1-frame-inside-describe">
                             <div class="testpaper-tab-1-frame-inside-describe-information">
                              <button>{{testpapernew.paper_tag_one}}</button>
-                             <button>{{testpapernew.paper_tag_one}}</button>
-                             <button>{{testpapernew.paper_tag_one}}</button>  
+                             <button>{{testpapernew.paper_tag_two}}</button>
+                             <button>{{testpapernew.paper_tag_three}}</button>  
                              </div>
                         </div>
                     </div>
@@ -146,11 +175,37 @@
 // import Vue from 'vue'
 import "../css/testpaper.css"
 import "../css/public.css"
+
 export default {
     name: 'WorkspaceJsonTestpaper',
-
+   
     data() {
         return {
+             options: [{
+          value: '语文',
+          label: '语文'
+        }, {
+          value: '数学',
+          label: '数学'
+        }, {
+          value: '英语',
+          label: '英语'
+        }],
+        value: [],
+            updateTitlea:"",
+            imgvaluepather:"上传试卷图片",
+            formLabelWidth: '120px',
+            //  options: [],
+        // value: [],
+        list: [],
+        loading: false,
+        // states: ["语文",'数学','英语','政治','c语言'],
+            testpaper:{
+                title:"",
+                paperimg:"",
+                tag:"",
+            },
+            testpapervalue:false,
             state1:"",
             usertestpapernew:{},
             officaltestpaper:{},
@@ -167,6 +222,9 @@ export default {
         // console.log(this)
     },
     mounted() {
+    //       this.list = this.states.map(item => {
+    //     return { value: `${item}`, label: `${item}` };
+    //   });
         var that = this
            this.restaurants = this.loadAll();
         console.log(this)
@@ -292,6 +350,49 @@ export default {
     },
 
     methods: {
+        father(e){
+                this.updateTitlea = e
+                console.log(this.value)
+        },
+        testpapervaluea(){
+
+            this.testpapervalue = false,
+            this.$http({
+                url:"subject/inserttextpaper",
+                method:"post",
+                params:{
+                    title:this.testpaper.name,
+                    img_ico:this.updateTitlea,
+                    // paper_data:"",
+                    paper_tag_one:this.value[0],
+                    paper_tag_two:this.value[1],
+                    paper_tag_three:this.value[2],
+                    useroroffical:"用户",
+                }
+            }).then(res=>{
+                console.log(res),
+                this.$message.success(res.data.mes),window.location.reload()
+            }).catch(err=>{
+                console.log(err)
+            })
+        },
+        uploadtestpaper(){
+            this.testpapervalue = true
+        },
+         remoteMethod(query) {
+        if (query !== '') {
+          this.loading = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.options = this.list.filter(item => {
+              return item.label.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+            });
+          }, 200);
+        } else {
+          this.options = [];
+        }
+      },
         testtitle(title){
           this.$router.push({
             path:"testpapercontent",

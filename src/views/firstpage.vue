@@ -6,29 +6,29 @@
         <el-main style="margin-left:20px">
           <div class="main-header">
             <div class="main-header-content">
-              <el-tag effect="plain" type="info">标签一</el-tag>
-              <el-tag effect="plain">标签二</el-tag>
+              <el-tag effect="plain" v-for="(item,index)  in subjectbtn" :key="item" @click="subjectvalue(index)" id="subjectvalue" ref="subjectref">{{item}}</el-tag>
+              <!-- <el-tag effect="plain">数学</el-tag>
+              <el-tag effect="plain">英语</el-tag>
+              <el-tag effect="plain">政治</el-tag>
+              <el-tag effect="plain">计算机</el-tag>
+              <el-tag effect="plain">医学</el-tag>
+              <el-tag effect="plain">农学</el-tag>
+              <el-tag effect="plain">经管</el-tag>
+              <el-tag effect="plain">艺术概论</el-tag>
+              <el-tag effect="plain">法律</el-tag>
+              <el-tag effect="plain">教育理论</el-tag>
+              <el-tag effect="plain">杂七杂八</el-tag>
+              <el-tag effect="plain">标签五</el-tag>
               <el-tag effect="plain">标签三</el-tag>
               <el-tag effect="plain">标签四</el-tag>
-              <el-tag effect="plain">标签五</el-tag>
-              <el-tag effect="plain">标签二</el-tag>
-              <el-tag effect="plain">标签三</el-tag>
-              <el-tag effect="plain">标签四</el-tag>
-              <el-tag effect="plain">标签五</el-tag>
-              <el-tag effect="plain">标签二</el-tag>
-              <el-tag effect="plain">标签三</el-tag>
-              <el-tag effect="plain">标签四</el-tag>
-              <el-tag effect="plain">标签五</el-tag>
-              <el-tag effect="plain">标签三</el-tag>
-              <el-tag effect="plain">标签四</el-tag>
-              <el-tag effect="plain">标签五</el-tag>
+              <el-tag effect="plain">标签五</el-tag> -->
             </div>
           </div>
           <div class="main-center">
             <div class="main-center-content">
               <div class="main-center-content-top">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                  <el-tab-pane label="内容一" name="first">
+                  <el-tab-pane label="广东分区" name="first">
                     <div class="main-conetnet" v-for="item in datalist" :key="item.id" v-show="item.status!='审核中'">
                       <div class="main-conetnet-first">
                         <div class="first-left">
@@ -65,8 +65,8 @@
                         </div>
                         <el-col :span="12">
                           <div class="main-right-one">
-                              <el-tooltip class="item" effect="dark" :content="item.describe" placement="top">
-      <el-button>描述</el-button>
+                              <el-tooltip class="item" effect="dark" :content="item.area" placement="top">
+      <el-button>区域</el-button>
     </el-tooltip>
                           </div>
                         </el-col>
@@ -78,14 +78,213 @@
                         </div>
                     </div>
                   </el-tab-pane>
-                  <el-tab-pane label="暂时没有" name="second"
-                    >暂时没有</el-tab-pane
+                  <el-tab-pane label="四川分区" name="second"
+                    >
+                     <div class="main-conetnet" v-for="item in datalist" :key="item.id" v-show="item.status!='审核中'">
+                      <div class="main-conetnet-first">
+                        <div class="first-left">
+                          <el-col :span="12" class="main-first-col">
+                            <div class="main-inside" >
+                              <div class="transfrom"  @click="a(item)">{{item.title}}</div>                                         
+                              <div class="main-first-left-tag ">                                                                                                                                                                                                                                                                                                              
+                              <el-tag type="success" class="tag-main">{{item.tag}}</el-tag>
+                               <el-tag type="success">{{item.tag}}</el-tag>
+                              </div>
+                              <div class="difficulty" >                   
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.time}}</div>
+                              </div>
+                              <div class="main-first-information" >
+                                  <el-tooltip  effect="dark" content="浏览量" placement="right">
+                                <el-link icon="el-icon-view">{{item.views}}</el-link>
+                                </el-tooltip>
+                                 <el-tooltip  effect="dark" content="收藏数" placement="right">
+                                <el-link icon="el-icon-folder-add">{{item.collection}}</el-link>
+                                  </el-tooltip>
+                                   <el-tooltip  effect="dark" content="留言数" placement="right">
+                                <el-link icon="el-icon-edit">{{item.Leavingmessage}}</el-link>
+                                </el-tooltip>
+                                <el-tooltip  effect="dark" content="遇到数" placement="right">
+                                <el-link icon="el-icon-user-solid">{{item.yudao}}</el-link>
+                                 </el-tooltip>
+                              </div>
+                            </div>
+                          </el-col>
+                        </div>
+                        <el-col :span="12">
+                          <div class="main-right-one">
+                              <el-tooltip class="item" effect="dark" :content="item.area" placement="top">
+      <el-button>区域</el-button>
+    </el-tooltip>
+                          </div>
+                        </el-col>
+                      </div>
+                    </div>
+                    <div class="lookmore">
+                        <div>
+                            <el-button type="primary" @click="lookmore" class="seemore" >查看更多</el-button>
+                        </div>
+                    </div>
+                    </el-tab-pane
                   >
-                  <el-tab-pane label="暂时没有" name="third"
-                    >暂时没有</el-tab-pane
+                  <el-tab-pane label="山西分区" name="third"
+                    >
+                    <div class="main-conetnet" v-for="item in datalist" :key="item.id" v-show="item.status!='审核中'">
+                      <div class="main-conetnet-first">
+                        <div class="first-left">
+                          <el-col :span="12" class="main-first-col">
+                            <div class="main-inside" >
+                              <div class="transfrom"  @click="a(item)">{{item.title}}</div>                                         
+                              <div class="main-first-left-tag ">                                                                                                                                                                                                                                                                                                              
+                              <el-tag type="success" class="tag-main">{{item.tag}}</el-tag>
+                               <el-tag type="success">{{item.tag}}</el-tag>
+                              </div>
+                              <div class="difficulty" >                   
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.time}}</div>
+                              </div>
+                              <div class="main-first-information" >
+                                  <el-tooltip  effect="dark" content="浏览量" placement="right">
+                                <el-link icon="el-icon-view">{{item.views}}</el-link>
+                                </el-tooltip>
+                                 <el-tooltip  effect="dark" content="收藏数" placement="right">
+                                <el-link icon="el-icon-folder-add">{{item.collection}}</el-link>
+                                  </el-tooltip>
+                                   <el-tooltip  effect="dark" content="留言数" placement="right">
+                                <el-link icon="el-icon-edit">{{item.Leavingmessage}}</el-link>
+                                </el-tooltip>
+                                <el-tooltip  effect="dark" content="遇到数" placement="right">
+                                <el-link icon="el-icon-user-solid">{{item.yudao}}</el-link>
+                                 </el-tooltip>
+                              </div>
+                            </div>
+                          </el-col>
+                        </div>
+                        <el-col :span="12">
+                          <div class="main-right-one">
+                              <el-tooltip class="item" effect="dark" :content="item.area" placement="top">
+      <el-button>区域</el-button>
+    </el-tooltip>
+                          </div>
+                        </el-col>
+                      </div>
+                    </div>
+                    <div class="lookmore">
+                        <div>
+                            <el-button type="primary" @click="lookmore" class="seemore" >查看更多</el-button>
+                        </div>
+                    </div>
+                    </el-tab-pane
                   >
-                  <el-tab-pane label="暂时没有" name="fourth"
-                    >暂时没有</el-tab-pane
+                  <el-tab-pane label="江苏分区" name="fourth"
+                    >
+                    <div class="main-conetnet" v-for="item in datalist" :key="item.id" v-show="item.status!='审核中'">
+                      <div class="main-conetnet-first">
+                        <div class="first-left">
+                          <el-col :span="12" class="main-first-col">
+                            <div class="main-inside" >
+                              <div class="transfrom"  @click="a(item)">{{item.title}}</div>                                         
+                              <div class="main-first-left-tag ">                                                                                                                                                                                                                                                                                                              
+                              <el-tag type="success" class="tag-main">{{item.tag}}</el-tag>
+                               <el-tag type="success">{{item.tag}}</el-tag>
+                              </div>
+                              <div class="difficulty" >                   
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.time}}</div>
+                              </div>
+                              <div class="main-first-information" >
+                                  <el-tooltip  effect="dark" content="浏览量" placement="right">
+                                <el-link icon="el-icon-view">{{item.views}}</el-link>
+                                </el-tooltip>
+                                 <el-tooltip  effect="dark" content="收藏数" placement="right">
+                                <el-link icon="el-icon-folder-add">{{item.collection}}</el-link>
+                                  </el-tooltip>
+                                   <el-tooltip  effect="dark" content="留言数" placement="right">
+                                <el-link icon="el-icon-edit">{{item.Leavingmessage}}</el-link>
+                                </el-tooltip>
+                                <el-tooltip  effect="dark" content="遇到数" placement="right">
+                                <el-link icon="el-icon-user-solid">{{item.yudao}}</el-link>
+                                 </el-tooltip>
+                              </div>
+                            </div>
+                          </el-col>
+                        </div>
+                        <el-col :span="12">
+                          <div class="main-right-one">
+                              <el-tooltip class="item" effect="dark" :content="item.area" placement="top">
+      <el-button>区域</el-button>
+    </el-tooltip>
+                          </div>
+                        </el-col>
+                      </div>
+                    </div>
+                    <div class="lookmore">
+                        <div>
+                            <el-button type="primary" @click="lookmore" class="seemore" >查看更多</el-button>
+                        </div>
+                    </div>
+                    </el-tab-pane
+                  > 
+                  <el-tab-pane label="浙江分区" name="five"
+                    >
+                    <div class="main-conetnet" v-for="item in datalist" :key="item.id" v-show="item.status!='审核中'">
+                      <div class="main-conetnet-first">
+                        <div class="first-left">
+                          <el-col :span="12" class="main-first-col">
+                            <div class="main-inside" >
+                              <div class="transfrom"  @click="a(item)">{{item.title}}</div>                                         
+                              <div class="main-first-left-tag ">                                                                                                                                                                                                                                                                                                              
+                              <el-tag type="success" class="tag-main">{{item.tag}}</el-tag>
+                               <el-tag type="success">{{item.tag}}</el-tag>
+                              </div>
+                              <div class="difficulty" >                   
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.difflcult}}</div>
+                                <div>|</div>
+                                <div>{{item.time}}</div>
+                              </div>
+                              <div class="main-first-information" >
+                                  <el-tooltip  effect="dark" content="浏览量" placement="right">
+                                <el-link icon="el-icon-view">{{item.views}}</el-link>
+                                </el-tooltip>
+                                 <el-tooltip  effect="dark" content="收藏数" placement="right">
+                                <el-link icon="el-icon-folder-add">{{item.collection}}</el-link>
+                                  </el-tooltip>
+                                   <el-tooltip  effect="dark" content="留言数" placement="right">
+                                <el-link icon="el-icon-edit">{{item.Leavingmessage}}</el-link>
+                                </el-tooltip>
+                                <el-tooltip  effect="dark" content="遇到数" placement="right">
+                                <el-link icon="el-icon-user-solid">{{item.yudao}}</el-link>
+                                 </el-tooltip>
+                              </div>
+                            </div>
+                          </el-col>
+                        </div>
+                        <el-col :span="12">
+                          <div class="main-right-one">
+                              <el-tooltip class="item" effect="dark" :content="item.area" placement="top">
+      <el-button>区域</el-button>
+    </el-tooltip>
+                          </div>
+                        </el-col>
+                      </div>
+                    </div>
+                    <div class="lookmore">
+                        <div>
+                            <el-button type="primary" @click="lookmore" class="seemore" >查看更多</el-button>
+                        </div>
+                    </div>
+                    </el-tab-pane
                   >
                 </el-tabs>
               </div>
@@ -193,7 +392,7 @@
 
 <script>
 
-import {lookmorea,lookmoreab} from "../api/firstpage"
+import {lookmorea,lookmoreab,changearea} from "../api/firstpage"
 import "../css/firstpage.css"
 import Floor from "../components/floor.vue";
 // import '../components/header.vue'
@@ -201,6 +400,20 @@ import Header from "../components/header.vue";
 export default {
   data() {
     return {
+      subjectbtn:{
+        语文:"语文",
+        数学:"数学",
+        英语:"英语",
+        政治:"政治",
+        医学:"医学",
+        农学:"农学",
+        经管:"经管",
+        艺术概论:"艺术概论",
+        法律:"法律",
+        教育理论:"教育理论",
+        杂七杂八:"杂七杂八",
+
+      },
       imgurl:"qq.jpg",
       Prompt:"111",
       timer:"",
@@ -222,38 +435,55 @@ export default {
     };
   },
   methods: {
+   
+    subjectvalue(index){
+        console.log(index,"index")
+        console.log(this.subjectbtn.index)
+        // console.log(this.$refs.subjectref)
+        this.$http({
+          url:"users/changesubjectbtn",
+          method:"get",
+          params:{
+            btnvalue:index
+          }
+        }).then(res=>{
+          console.log(res),this.datalist = res.data
+        }).catch(err=>{
+          console.log(err)
+        })
+    },
    a(a){
     // console.log()
     console.log(a,"0===============")
     console.log(a,this.$cookies.get("username"))
-   
-    this.$http({
-      method:"get",
-      url:"users/updateseevalue",
-      // url:"updateseevalue",
-      params:{
-        see:"true",
-        title:a.title,
-        username:this.$cookies.get("username"),
-        views:a.views +1
-        // view:view 
-      }
-    }).then((res) => {
-        console.log(res),this.$router.push("/contentmain"),
-           this.$http({
-      method:"get",
-      url:"subject/updatescore",
-      params:{
-        username:this.$cookies.get("username")
-      }
-    }).then((res) => {
-        console.log(res)
-    }).catch((err) => {
-        console.log(err)
-    });
-    }).catch((err) => {
-        console.log(err)
-    });
+   this.$router.push("/contentmain")
+    // this.$http({
+    //   method:"get",
+    //   url:"users/updateseevalue",
+    //   // url:"updateseevalue",
+    //   params:{
+    //     see:"true",
+    //     title:a.title,
+    //     username:this.$cookies.get("username"),
+    //     views:a.views +1
+    //     // view:view 
+    //   }
+    // }).then((res) => {
+        
+    // //        this.$http({
+    // //   method:"get",
+    // //   url:"subject/updatescore",
+    // //   params:{
+    // //     username:this.$cookies.get("username")
+    // //   }
+    // // }).then((res) => {
+    // //     console.log(res)
+    // // }).catch((err) => {
+    // //     console.log(err)
+    // // });
+    // }).catch((err) => {
+    //     console.log(err)
+    // });
     this.$store.dispatch('infromation',a.title);
       this.$cookies.set("title",this.$store.state.title)
       // this.$cookies.set("title",this.$store.state.title)
@@ -275,8 +505,13 @@ export default {
       })
      
     },
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClick(e) {
+      console.log(e.$options.propsData.label)
+      changearea(e.$options.propsData.label).then(res=>{
+        console.log(res),this.datalist  = res.data
+      }).catch(err=>{
+        console.log(err)
+      })
     },
     errorHandler() {
       return true;
@@ -288,6 +523,24 @@ export default {
     Floor,
   },
   mounted(){
+     var that = this
+    // var that = this
+    //  var btn = document.getElementById('subjectvalue')
+    // var btn = document.querySelectorAll("#subjectvalue")
+    // console.log(btn.onclick = function(){},"oncilc")
+    //   btn.onclick = function(){
+    //     that.$http({
+    //       url:"users/changesubjectbtn",
+    //       method:"get",
+    //       params:{
+    //         btnvalue:this.innerText
+    //       }
+    //     }).then(res=>{
+    //       console.log(res),this.datalist = res.data
+    //     }).catch(err=>{
+    //       console.log(err)
+    //     })
+    //   }
     // console.log(this.timevalue)
     if(this.$cookies.get("times")>=2592000){
        this.$http({
@@ -328,7 +581,7 @@ export default {
 //     })
     
    
-    var that = this
+   
    that.timer =   setInterval(function(){
       if (document.readyState =="complete"){
       that.loading = false
@@ -405,9 +658,9 @@ export default {
       font-size: 14px;
     }
   
-    .item {
+    /* .item {
       margin-bottom: 18px;
-    }
+    } */
       .box-card {
       /* width: 480px; */
     }

@@ -37,12 +37,16 @@
                 <el-col :span="4">
                      <el-button type="primary" @click="upload">点击上传</el-button>
                 </el-col>
-                <el-col :span="4" >
+                <el-col :span="4"  v-if="information">
                      <el-dropdown :hide-on-click="false">
   <span class="el-dropdown-link">
-    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+    <el-badge :is-dot="Boolean($store.state.headernum) " class="itema" >
+     
+  <el-button size="small">消息中心</el-button>
+</el-badge>
   </span>
   <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>{{$cookies.get("username")}}</el-dropdown-item>
     <el-dropdown-item ><a href="#" @click="childdata">个人中心</a> </el-dropdown-item>
      <el-dropdown-item ><a href="#" @click="Logout">退出登录</a> </el-dropdown-item>
   </el-dropdown-menu>
@@ -66,6 +70,8 @@ import "../css/public.css";
 export default {
   data() {
     return {
+      badge:false,
+      information:false,
       istrue:true,
         input4:"",
          searchsubjectvalue: '',
@@ -77,7 +83,47 @@ export default {
   },
 
   mounted() {
- 
+    
+    if(this.$cookies.get("username")== null){
+      console.log("sha")
+    }else{
+      this.$http({
+      url:"/subject/headernum",
+      method:"get",
+      params:{
+        username:this.$cookies.get("username")
+      }
+    }).then(res=>{
+      console.log(res.data,1)
+      if(res.data.length == 0){
+        console.log('return')
+        return
+      }else{
+  // var num =  Object.values(res.data)
+  //  console.log(num,"num")
+      for(let i =0;i<=res.data.length-1;i++){
+        console.log(Object.values(res.data[i]),'i')
+        if(Object.values(res.data[i]) == 1){
+        
+          window.localStorage.setItem("headernum",true)
+          // this.badge =Boolean(window.localStorage.getItem("headernum")) 
+            console.log(this.badge,"bgage")
+        }else{
+        // return
+        console.log("shayemeiy1")
+        }
+      }
+     
+      }
+    
+    })
+    }
+    
+    if(this.$cookies.get("username") != null){
+      this.information = true
+    }else{
+      this.information = false
+    }
      var n = window.location.href
        console.log(n)
       console.log(n.indexOf("subject")!=-1,1) 
@@ -172,15 +218,13 @@ export default {
 // window.open(routeData.href, '_blank')
     },
     Logout(){
-      if(sessionStorage.length!=0){
+     
       window,sessionStorage.clear()
       // this.$cookies.remove("keyname")
         this.$cookies.remove("keyname")
       this.$cookies.remove("username")
       this.$router.push('/login')
-      }else{
-        this.$message.error("请不要重复点击")
-      }
+     
     },
     cishi(){
       this.$router.push("/about")

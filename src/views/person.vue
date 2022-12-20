@@ -26,6 +26,14 @@
     <i class="el-icon-setting"></i>
     <span slot="title">浏览记录</span>
   </el-menu-item>
+  <el-menu-item index="comment">
+    <i class="el-icon-s-comment"></i>
+    <span slot="title">谁给评论我</span>
+  </el-menu-item>
+  <el-menu-item index="replypage">
+    <i class="el-icon-edit"></i>
+    <span slot="title">谁回复我</span>
+  </el-menu-item>
 </el-menu>
                         </div>
                     </div>
